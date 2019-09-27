@@ -1,0 +1,22 @@
+doctype html
+head
+  title Create Question
+div
+  |Question: 
+  input(id='ques' type='text' name='FirstName' value='Mickey')
+  br
+  input#subby(type='submit' value='Submit')
+
+
+div
+  textarea(id='displayspot' rows='4' cols='50')
+    | hothing yet
+script(type='text/javascript').
+  var testText = " ";
+  document.getElementById("subby").addEventListener("click", function() {
+  varSetter(document.getElementById('ques').value);
+  }, false);
+  function varSetter(gotText){
+      testText = gotText;
+      console.log(testText);
+  }

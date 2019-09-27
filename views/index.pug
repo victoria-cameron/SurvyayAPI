@@ -1,0 +1,32 @@
+extends default
+
+block content
+  div.container
+    each person in people
+      div.person
+        div.person-image(style=`background: url('/images/${person.imgSrc}') top center
+        no-repeat; background-size: cover;`)
+        h2.person-name
+          | #{person.firstname} #{person.lastname}
+
+        a(href=`/profile?id=${person.id}`)
+          | View example
+        br
+
+        a(href=`/question`)
+          | Questions
+        br
+
+        a(href='/projects')
+          | Projects
+
+//- p Hello Pug!
+
+//- p Hello my name is #{name}
+//- // <p>Hello my name is Ayo</p>
+
+//- div.container
+//-   p#hello Hello Pug!
+//-   button.btn.btn-blue Click Me
+
+//-  

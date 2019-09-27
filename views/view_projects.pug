@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        title= 'Project List'
+    body
+        h1= 'Project List'
+    table
+        for project in projectList
+            tr
+                td= project.ProdID
+                td
+                  a(href='/projects/'+project.ProdID) #{project.Title}
+                td= project.Description
+                td= project.Logo

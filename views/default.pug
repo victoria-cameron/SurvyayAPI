@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title #{title}
+    link(rel='stylesheet', href='/css/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    main
+      block header
+        header.header
+          div.logo-image(style=`background: url('/images/SurvyaySmall Logo.jpg') top center 
+            no-repeat; background-size: cover;`)
+          h1 #{title}
+      block content
+
+
+    //-   making changes to get the logo to display in the header
