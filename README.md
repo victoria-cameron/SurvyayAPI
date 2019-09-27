@@ -1,19 +1,10 @@
-![Screenshot](https://res.cloudinary.com/turnup/image/upload/v1526512881/homepage-cards.png)
 
-# First Node Website Tutorial Starter Files
+# Survyay API Documents
 
-These are the starter files to accompany the tutorial for building a simple Node.js website with Express and Pug.
-
-You can [access the tutorial here](https://freshman.tech/learn-node).
-
-[Live demo](https://freshman-node.herokuapp.com/)
+As the great Kanye once said "Y'all think you wild." But no, I'll tell you who wild; ME! This is the laziest thing I've ever come up with but its freaking happening. Get with the times people API is the future!
 
 ## Instructions
 1. Clone repo
 2. Run `npm install`
-
-## Getting Help
-
-Need some help? Leave a comment on the tutorial — this repo is meant as a place to grab the starter files and isn't a support channel.
-
+3. run a quick npm start to run and use this to access the database
 
