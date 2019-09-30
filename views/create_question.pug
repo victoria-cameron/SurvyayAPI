@@ -17,32 +17,19 @@ script(type='text/javascript').
     varSetter(document.getElementById('ques').value);
     }, false);
     function varSetter(gotText){
-        console.log(testText);
         console.log(gotText);
-        fetching = {
-            "Ques_text": gotText
-        }
-        //UserAction(gotText);
-        fetchTest(fetching);
-    }
-    function UserAction(questionBody) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-            }
-        };
-        xhttp.open("POST", "http://localhost:3000/api/questions/add", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send("Ques_text=" + questionBody);
-    }
-    function fetchTest(opts) {
+         
+        event.preventDefault();
+
+        let tittle = gotText
+
         fetch('http://localhost:3000/api/questions/add', {
-            method: 'post',
-            body: JSON.stringify(opts)
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-        });
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({Ques_text:tittle})
+        }).then((res) => res.json())
+        .then((data) =>  console.log(data))
+        .catch((err)=>console.log(err))
+        
     }
+
