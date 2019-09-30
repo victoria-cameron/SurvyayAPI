@@ -12,6 +12,11 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 app.use(cors());
 app.get('/', (req, res) => {
+    res.render('login', {
+        title: 'LogIn',
+    });
+});
+app.get('/main', (req, res) => {
     res.render('index', {
         title: 'Homepage',
         people: people.profiles

@@ -3,9 +3,10 @@ head
     title Create Question
 div
     |Question: 
-    input(id='ques' type='text' name='FirstName' value='Hometown')
+    input(id='ques' type='text' name='FirstName' value='Salary: ')
     br
     input#subby(type='submit' value='Submit')
+    input#bubby(type='submit' value='Get Questions')
 
 div
     textarea(id='displayspot' rows='4' cols='50')
@@ -14,9 +15,13 @@ div
 script(type='text/javascript').
     var testText = "Q";
     document.getElementById("subby").addEventListener("click", function() {
-    varSetter(document.getElementById('ques').value);
+    postQuestion(document.getElementById('ques').value);
     }, false);
-    function varSetter(gotText){
+    document.getElementById("bubby").addEventListener("click", function() {
+    getQuestion();
+    }, false);
+
+    function postQuestion(gotText){
         console.log(gotText);
          
         event.preventDefault();
@@ -31,5 +36,21 @@ script(type='text/javascript').
         .then((data) =>  console.log(data))
         .catch((err)=>console.log(err))
         
+    }
+    function getQuestion(){
+        fetch('http://localhost:3000/api/questions')
+        .then((res_1) => { return res_1.json() })
+        .then((data_1) => {
+            let result = ``;
+            data_1.forEach((question) => {
+                const { QuesID, Ques_text} = question
+                result +=
+                `QuesID: ${QuesID} 
+                        Question Text : ${Ques_text} \n ` ;
+                
+                document.getElementById('displayspot').innerHTML = result;
+            });
+        })
+    
     }
 
