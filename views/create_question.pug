@@ -1,22 +1,48 @@
 doctype html
 head
-  title Create Question
+    title Create Question
 div
-  |Question: 
-  input(id='ques' type='text' name='FirstName' value='Mickey')
-  br
-  input#subby(type='submit' value='Submit')
-
+    |Question: 
+    input(id='ques' type='text' name='FirstName' value='Hometown')
+    br
+    input#subby(type='submit' value='Submit')
 
 div
-  textarea(id='displayspot' rows='4' cols='50')
-    | hothing yet
+    textarea(id='displayspot' rows='4' cols='50')
+        | nothing yet
+
 script(type='text/javascript').
-  var testText = " ";
-  document.getElementById("subby").addEventListener("click", function() {
-  varSetter(document.getElementById('ques').value);
-  }, false);
-  function varSetter(gotText){
-      testText = gotText;
-      console.log(testText);
-  }
+    var testText = "Q";
+    document.getElementById("subby").addEventListener("click", function() {
+    varSetter(document.getElementById('ques').value);
+    }, false);
+    function varSetter(gotText){
+        console.log(testText);
+        console.log(gotText);
+        fetching = {
+            "Ques_text": gotText
+        }
+        //UserAction(gotText);
+        fetchTest(fetching);
+    }
+    function UserAction(questionBody) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            }
+        };
+        xhttp.open("POST", "http://localhost:3000/api/questions/add", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send("Ques_text=" + questionBody);
+    }
+    function fetchTest(opts) {
+        fetch('http://localhost:3000/api/questions/add', {
+            method: 'post',
+            body: JSON.stringify(opts)
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+        });
+    }

@@ -3,24 +3,26 @@ const people = require('./people.json');
 const app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+
 
 app.set('view engine', 'pug');
 
 //Connecting to pages
 app.use(express.static(__dirname + '/public'));
-
+app.use(cors());
 app.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Homepage',
-    people: people.profiles
-  });
+    res.render('index', {
+        title: 'Homepage',
+        people: people.profiles
+    });
 });
 
 app.get('/profile', (req, res) => {
     const person = people.profiles.find(p => p.id === req.query.id);
     res.render('profile', {
-      title: `About ${person.firstname} ${person.lastname}`,
-      person,
+        title: `About ${person.firstname} ${person.lastname}`,
+        person,
     });
 });
 
@@ -32,7 +34,7 @@ app.get('/question', (req, res) => {
 
 //opening express connection
 const server = app.listen(7000, () => {
-  console.log(`Express running → PORT ${server.address().port}`);
+    console.log(`Express running → PORT ${server.address().port}`);
 });
 
 //testing connection to DB (for comfort)
@@ -114,8 +116,8 @@ api_connection.connect(function (err) {
     console.log('You are now connected... API')
 })
 
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.json());	   // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({	 // to support URL-encoded bodies
     extended: true
 }));
 
@@ -176,15 +178,14 @@ app.get('/api/questions', function (req, res) {
 
 //Add a Question
 app.post('/api/questions/add', function (req, res) {
-    var postData = req.body;
-    api_connection.query('INSERT INTO questions SET ?', postData, function (error, results, fields) {
+    var postQuestion = req.body;
+    api_connection.query('INSERT INTO questions SET ?', postQuestion, function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
 //Example Body
 //{
-//    "QuesID": "", (is auto gened: Dont include)
-//    "Ques_text": ""
+//	"QuesID": "", (is auto gened: Dont include)
+//	"Ques_text": ""
 //}
-

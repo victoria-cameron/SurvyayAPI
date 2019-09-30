@@ -1,0 +1,38 @@
+doctype html
+
+    <script>
+        var testText = " "
+        function varSetter(gotText) {
+            testText = gotText;
+            console.log(testText);
+            var jsonbod = "{'Ques_text': " + testText + "}"
+            const userAction = async () => {
+                const response = await fetch('http://localhost:3000/api/questions/add', {
+                    method: 'POST',
+                    body: jsonbod,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const myJson = await response.json(); //extract JSON from the http response
+                // do something with myJson
+
+                console.log(myJson);
+            }
+        }
+
+
+        function UserAction(questionBody) {
+            var jsonQuestion = "{'Ques_text': " + questionBody + "}"
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            };
+            xhttp.open("POST", "http://localhost:3000/api/questions/add", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(jsonQuestion);
+        }
+
+    </script>
