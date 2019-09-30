@@ -1,13 +1,54 @@
 doctype html
 head
-    title Create Question
+    title Login
 div
-    |Question: 
-    input(id='ques' type='text' name='FirstName' value='Salary: ')
+    |Username:
+    input(id='user' type='text' name='username' value='_tjoy')
     br
-    input#subby(type='submit' value='Submit')
-    input#bubby(type='submit' value='Get Questions')
+    |Password:
+    input(id='pass' type='text' name='password' value='surveysRkool')
+    br
+    br
+    input#log(type='submit' value='LogIn')
+    br
 
 div
-    textarea(id='displayspot' rows='4' cols='50')
+    textarea(id='userinfo' rows='4' cols='50')
         | nothing yet
+
+
+script(type='text/javascript').
+    document.getElementById('log').addEventListener("click", function() {
+    logIn(document.getElementById('user').value);
+    }, false);
+
+
+
+    function logIn(gathered_id){
+        var validate_user = '';
+        var validate_pass = '';
+        var userURL = ('http://localhost:3000/api/users/single/'+ gathered_id)
+        
+        fetch(userURL)
+        .then((user_res) => { return user_res.json() })
+        .then((user_data) => {
+            let user_result = ``;
+            user_data.forEach((user) => {
+                const { UserID, Fir_Name, Las_Name, Email, Password} = user
+                user_result +=
+                `UserID: ${UserID} 
+                        FN : ${Fir_Name} \n 
+                        LN : ${Las_Name} \n 
+                        EM : ${Email} \n 
+                        PS : ${Password} \n ` ;
+                validate_user = UserID
+                validate_pass = Password
+                validator(validate_user, validate_pass);
+            });
+        })
+    }
+
+    function validator(person, code){
+    
+    
+    }

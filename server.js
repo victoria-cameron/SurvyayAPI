@@ -194,3 +194,12 @@ app.post('/api/questions/add', function (req, res) {
 //	"QuesID": "", (is auto gened: Dont include)
 //	"Ques_text": ""
 //}
+
+//___________________________________________________________Project_Users & Passwords_______________________________________
+//get a single user
+app.get('/api/users/single/:UserID', function (req, res) {
+    api_connection.query('select * from users where UserID=?', [req.params.UserID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
