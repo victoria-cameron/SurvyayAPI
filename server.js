@@ -197,9 +197,12 @@ app.post('/api/questions/add', function (req, res) {
 
 //___________________________________________________________Project_Users & Passwords_______________________________________
 //get a single user
-app.get('/api/users/single/:UserID', function (req, res) {
-    api_connection.query('select * from users where UserID=?', [req.params.UserID], function (error, results, fields) {
+app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
+    api_connection.query('select * from users, project_users where users.UserID = project_users.UserID And project_users.ProdID = ? And users.UserID = ?', [req.params.ProdID, req.params.UserID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
+
+
+

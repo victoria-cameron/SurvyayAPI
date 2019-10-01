@@ -2,6 +2,9 @@ doctype html
 head
     title Login
 div
+    |Project:
+    input(id='prod' type='text' name='project' value='A0001')
+    br
     |Username:
     input(id='user' type='text' name='username' value='_tjoy')
     br
@@ -18,37 +21,52 @@ div
 
 
 script(type='text/javascript').
+    var subd_user;
+    var subd_pass;
+    var subd_prod;
+    var real_user;
+    var real_pass;
+    var real_role;
+    
     document.getElementById('log').addEventListener("click", function() {
-    logIn(document.getElementById('user').value);
+    logIn(document.getElementById('prod').value,document.getElementById('user').value);
     }, false);
 
 
+    function logIn(gathered_prod, gathered_id){
+        subd_user = gathered_id,
+        subd_pass = document.getElementById('pass').value,
+        subd_prod = gathered_prod
 
-    function logIn(gathered_id){
-        var validate_user = '';
-        var validate_pass = '';
-        var userURL = ('http://localhost:3000/api/users/single/'+ gathered_id)
+        var userURL = ('http://localhost:3000/api/users/single/' + gathered_prod + '/' + gathered_id)
         
         fetch(userURL)
         .then((user_res) => { return user_res.json() })
         .then((user_data) => {
             let user_result = ``;
             user_data.forEach((user) => {
-                const { UserID, Fir_Name, Las_Name, Email, Password} = user
+                const { UserID, Fir_Name, Las_Name, Email, Password, ProdID, Role} = user
                 user_result +=
                 `UserID: ${UserID} 
                         FN : ${Fir_Name} \n 
                         LN : ${Las_Name} \n 
                         EM : ${Email} \n 
-                        PS : ${Password} \n ` ;
-                validate_user = UserID
-                validate_pass = Password
-                validator(validate_user, validate_pass);
-            });
-        })
+                        PS : ${Password} \n 
+                        PD : ${ProdID} \n
+                        RL : ${Role}` ;
+                real_pass = Password;  
+                real_user = UserID;
+                real_role = Role;
+                console.log(real_pass + subd_pass);
+            })    
+        }).then(validator());
     }
 
-    function validator(person, code){
-    
-    
+    function validator(){
+        if(subd_pass == real_pass){
+            window.location = '/main';
+        }
+        else if (subd_pass != real_pass){
+            document.getElementById('userinfo').innerHTML= "sorry boss"
+        }else{var cow = 2}
     }
