@@ -1,38 +1,77 @@
-doctype html
-
-    <script>
-        var testText = " "
-        function varSetter(gotText) {
-            testText = gotText;
-            console.log(testText);
-            var jsonbod = "{'Ques_text': " + testText + "}"
-            const userAction = async () => {
-                const response = await fetch('http://localhost:3000/api/questions/add', {
-                    method: 'POST',
-                    body: jsonbod,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const myJson = await response.json(); //extract JSON from the http response
-                // do something with myJson
-
-                console.log(myJson);
-            }
-        }
-
-
-        function UserAction(questionBody) {
-            var jsonQuestion = "{'Ques_text': " + questionBody + "}"
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText);
+<doctype html>
+    <html lang="en">
+    <body>
+        <p> This is my include file </p>
+    </body>
+</html>
+<script>
+    var testText = " "
+    function varSetter(gotText) {
+        testText = gotText;
+        console.log(testText);
+        var jsonbod = "{'Ques_text': " + testText + "}"
+        const userAction = async () => {
+            const response = await fetch('http://localhost:3000/api/questions/add', {
+                method: 'POST',
+                body: jsonbod,
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            };
-            xhttp.open("POST", "http://localhost:3000/api/questions/add", true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(jsonQuestion);
-        }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
 
-    </script>
+            console.log(myJson);
+        }
+    }
+
+
+    function UserAction(questionBody) {
+        var jsonQuestion = "{'Ques_text': " + questionBody + "}"
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+        xhttp.open("POST", "http://localhost:3000/api/questions/add", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(jsonQuestion);
+    }
+
+</script>
+
+
+
+
+real login file ERBSFUIHVUIHVAHUIAHUILFAHUIAHUIA
+    doctype html
+head
+    title Login
+    //script(src='jquery.js')
+    script.
+        (function(){
+        ("#includedContent").load("testh.html");
+        });
+div
+    |Project:
+    input(id='prod' type='text' name='project' value='A0001')
+    br
+    |Username:
+    input(id='user' type='text' name='username' value='_tjoy')
+    br
+    |Password:
+    input(id='pass' type='text' name='password' value='surveysRkool')
+    br
+    br
+    input#log(type='submit' value='LogIn')
+    br
+
+div
+    textarea(id='userinfo' rows='4' cols='50')
+        | nothing yet
+
+div#includedContent
+
+
+

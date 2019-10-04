@@ -195,6 +195,28 @@ app.post('/api/questions/add', function (req, res) {
 //	"Ques_text": ""
 //}
 
+//Add a Question Choice
+app.post('/api/questions/add_choice', function (req, res) {
+    var postChoice = req.body;
+    api_connection.query('INSERT INTO questions_choices SET ?', postChoice, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//Example Body
+//{
+//	"QuesID": "", 
+//	"Choi_text": "" 
+//}
+
+//View all the Choices for a Question
+app.get('/api/questions/single/:QuesID', function (req, res) {
+    api_connection.query('select * from questions_choices where QuesID=?', [req.params.QuesID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
 //___________________________________________________________Project_Users & Passwords_______________________________________
 //get a single user
 app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
@@ -204,5 +226,27 @@ app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
     });
 });
 
+//______________________________________________________________Surveys________________________________________________________
+//Add a survey
+app.post('/api/surveys/add', function (req, res) {
+    var postSurvey = req.body;
+    api_connection.query('INSERT INTO surveys SET ?', postSurvey, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//Example Body
+//{
+//	"SurvCreator": "",
+//	"SurvTitle": "",
+//	"SurvDescription": ""
+//}
 
-
+//Get all surveys
+app.get('/api/surveys', function (req, res) {
+    console.log(req);
+    api_connection.query('select * from surveys', function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
