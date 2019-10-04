@@ -227,6 +227,23 @@ app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
 });
 
 //______________________________________________________________Surveys________________________________________________________
+//Get all surveys
+app.get('/api/surveys', function (req, res) {
+    console.log(req);
+    api_connection.query('select * from surveys', function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+//rest api to get a single surveys data
+app.get('/api/surveys/single/:SurvID', function (req, res) {
+    api_connection.query('select * from surveys where SurvID=?', [req.params.SurvID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
 //Add a survey
 app.post('/api/surveys/add', function (req, res) {
     var postSurvey = req.body;
@@ -242,11 +259,32 @@ app.post('/api/surveys/add', function (req, res) {
 //	"SurvDescription": ""
 //}
 
-//Get all surveys
-app.get('/api/surveys', function (req, res) {
-    console.log(req);
-    api_connection.query('select * from surveys', function (error, results, fields) {
+//add question to a survey
+app.post('/api/surveys/add_question', function (req, res) {
+    var postSet = req.body;
+    api_connection.query('INSERT INTO survey_questions SET ?', postSet, function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
+//Example Body
+//{
+//	"SurvID": "", 
+//	"QuesID": "" 
+//}
+
+//Get all Questions and choices for a survey ______DO NOT COPY______
+app.get('/api/surveys/gather/:SurvID', function (req, res) {
+    api_connection.query('select * from surveys, questions, survey_questions, questions_choices where questions.QuesID = survey_questions.QuesID and surveys.SurvID = survey_questions.SurvID and questions.QuesID = questions_choices.QuesID and surveys.SurvID=?', [req.params.SurvID],
+        function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+
+//______________________________________________________________Interviews________________________________________________________
+//Add a survey
+
+
+
