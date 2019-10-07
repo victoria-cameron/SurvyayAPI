@@ -284,7 +284,58 @@ app.get('/api/surveys/gather/:SurvID', function (req, res) {
 
 
 //______________________________________________________________Interviews________________________________________________________
-//Add a survey
+//Get all interviews
+app.get('/api/interviews', function (req, res) {
+    console.log(req);
+    api_connection.query('select * from interviews', function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+//get all questions and answers for a given interview
+app.get('/api/interviews/gather/:InteID', function (req, res) {
+    api_connection.query('select * from interviews, records, questions where interviews.InteID = records.InteID and records.QuesID = questions.QuesID and interviews.InteID = ?', [req.params.InteID],
+        function (error, results, fields) {
+            if (error) throw error;
+            res.end(JSON.stringify(results));
+        });
+});
+
+
+//Add a new interview
+app.post('/api/interviews/add', function (req, res) {
+    var postInterview = req.body;
+    api_connection.query('INSERT INTO interviews SET ?', postInterview, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//Example Body
+//{
+//	"Filled_by": "",
+//	"SurvID": "",
+//  "InteTitle": ""
+//}
+
+//Add a record to an interview
+app.post('/api/interviews/add_record', function (req, res) {
+    var postRecord = req.body;
+    api_connection.query('INSERT INTO interviews SET ?', postRecord, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//Example Body
+//{
+//	"InteID": "",
+//	"QuesID": "",
+//  "Reco_ans": "",
+//  "Note": ""
+//}
+
+
+
 
 
 
