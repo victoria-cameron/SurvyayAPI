@@ -38,15 +38,16 @@ app.get('/question', (req, res) => {
 });
 
 //opening express connection
-const server = app.listen(7000, () => {
+const server = app.listen(7000,'0.0.0.0',() => {
     console.log(`Express running → PORT ${server.address().port}`);
 });
+
 
 //testing connection to DB (for comfort)
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "passwordpassword",
+    password: "TeamRivas12$",
     database: "survay"
 });
 con.connect(function (err) {
@@ -59,7 +60,7 @@ function getMySQLConnection() {
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'passwordpassword',
+        password: 'TeamRivas12$',
         database: 'survay'
     });
 }
@@ -104,14 +105,14 @@ app.get('/projects', function (req, res) {
 //______________________________________________________________________
 
 
-var apiServer = app.listen(3000, () => {
+var apiServer = app.listen(3000,'0.0.0.0', () => {
     console.log(`Express API running → PORT ${apiServer.address().port}`);
 });
 
 var api_connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'passwordpassword',
+    password: 'TeamRivas12$',
     database: 'survay'
 });
 

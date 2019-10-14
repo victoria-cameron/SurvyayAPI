@@ -28,7 +28,7 @@ script(type='text/javascript').
 
         let tittle = gotText
 
-        fetch('http://localhost:3000/api/questions/add', {
+        fetch('http://10.10.9.145:3000/api/questions/add', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({Ques_text:tittle})
@@ -38,7 +38,7 @@ script(type='text/javascript').
         
     }
     function getQuestion(){
-        fetch('http://localhost:3000/api/questions')
+        fetch('http://10.10.9.145:3000/api/questions')
         .then((res_1) => { return res_1.json() })
         .then((data_1) => {
             let result = ``;
