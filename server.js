@@ -184,6 +184,7 @@ app.get('/api/questions', function (req, res) {
 
 //Add a Question
 app.post('/api/questions/add', function (req, res) {
+    console.log(req);
     var postQuestion = req.body;
     api_connection.query('INSERT INTO questions SET ?', postQuestion, function (error, results, fields) {
         if (error) throw error;
@@ -198,6 +199,7 @@ app.post('/api/questions/add', function (req, res) {
 
 //Add a Question Choice
 app.post('/api/questions/add_choice', function (req, res) {
+    console.log(req);
     var postChoice = req.body;
     api_connection.query('INSERT INTO questions_choices SET ?', postChoice, function (error, results, fields) {
         if (error) throw error;
@@ -207,12 +209,23 @@ app.post('/api/questions/add_choice', function (req, res) {
 //Example Body
 //{
 //	"QuesID": "", 
-//	"Choi_text": "" 
+//	"Choi_text": "", 
+//  "Choi_text_id": ""
 //}
 
 //View all the Choices for a Question
 app.get('/api/questions/single/:QuesID', function (req, res) {
+    console.log(req);
     api_connection.query('select * from questions_choices where QuesID=?', [req.params.QuesID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+//View all the Choices for a Question
+app.get('/api/questions/all', function (req, res) {
+    console.log(req);
+    api_connection.query('select * from questions_choices, questions where questions_choices.QuesID=questions.QuesID', [req.params.QuesID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
