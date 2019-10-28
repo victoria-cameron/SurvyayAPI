@@ -240,6 +240,16 @@ app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
     });
 });
 
+//add a user with a project and a role
+app.post('/api/questions/add_choice', function (req, res) {
+    console.log(req);
+    var postChoice = req.body;
+    api_connection.query('INSERT INTO questions_choices SET ?', postChoice, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
 //______________________________________________________________Surveys________________________________________________________
 //Get all surveys
 app.get('/api/surveys', function (req, res) {
