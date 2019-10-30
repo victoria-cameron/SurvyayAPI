@@ -172,6 +172,14 @@ app.delete('/api/projects/delete/:ProdID', function (req, res) {
     });
 });
 
+//rest api to get all access levels for a project
+app.get('/api/access/single/:ProdID', function (req, res) {
+    api_connection.query('select * from access_level where ProdID=?', [req.params.ProdID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
 //_______________________________________________________Questions_________________________________________________________
 //view all Questions
 app.get('/api/questions', function (req, res) {
@@ -222,7 +230,7 @@ app.get('/api/questions/single/:QuesID', function (req, res) {
     });
 });
 
-//View all the Choices for a Question
+//View all the Choices for all Questions
 app.get('/api/questions/all', function (req, res) {
     console.log(req);
     api_connection.query('select * from questions_choices, questions where questions_choices.QuesID=questions.QuesID', [req.params.QuesID], function (error, results, fields) {
@@ -240,15 +248,12 @@ app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
     });
 });
 
-//add a user with a project and a role
-app.post('/api/questions/add_choice', function (req, res) {
-    console.log(req);
-    var postChoice = req.body;
-    api_connection.query('INSERT INTO questions_choices SET ?', postChoice, function (error, results, fields) {
-        if (error) throw error;
-        res.end(JSON.stringify(results));
-    });
-});
+//Add a user
+//Add a user to a project with a role
+//Get all users
+//Get users for a project with roles
+//Update users role
+//Update user Password
 
 //______________________________________________________________Surveys________________________________________________________
 //Get all surveys
@@ -345,7 +350,7 @@ app.post('/api/interviews/add', function (req, res) {
 //Add a record to an interview
 app.post('/api/interviews/add_record', function (req, res) {
     var postRecord = req.body;
-    api_connection.query('INSERT INTO interviews SET ?', postRecord, function (error, results, fields) {
+    api_connection.query('INSERT INTO records SET ?', postRecord, function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
