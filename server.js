@@ -47,7 +47,7 @@ const server = app.listen(7000,'0.0.0.0',() => {
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "TeamRivas12$",
+    password: "passwordpassword",
     database: "survay"
 });
 con.connect(function (err) {
@@ -60,7 +60,7 @@ function getMySQLConnection() {
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'TeamRivas12$',
+        password: 'passwordpassword',
         database: 'survay'
     });
 }
@@ -90,7 +90,7 @@ app.get('/projects', function (req, res) {
                 }
                 // Add object into array
                 projectList.push(project);
-            }
+            } 
 
             // Render index.pug page using array 
             res.render('view_projects', { "projectList": projectList });
@@ -112,7 +112,7 @@ var apiServer = app.listen(3000,'0.0.0.0', () => {
 var api_connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'TeamRivas12$',
+    password: 'passwordpassword',
     database: 'survay'
 });
 
@@ -249,11 +249,82 @@ app.get('/api/users/single/:ProdID/:UserID', function (req, res) {
 });
 
 //Add a user
-//Add a user to a project with a role
-//Get all users
+app.post('/api/users/add_user', function (req, res) {
+    console.log(req);
+    var postUser = req.body;
+    api_connection.query('INSERT INTO users SET ?', postUser, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//{
+//    "UserID": "testg",
+//    "Fir_Name": "guy",
+//    "Las_Name": "test",
+//    "Email": "test_guy@gmail.com",
+//    "Password": "password"
+//}
+
 //Get users for a project with roles
+app.get('/api/users/project_roles/:ProdID', function (req, res) {
+    console.log(req);
+    api_connection.query('SELECT * FROM project_users, access_level, users where access_level.ProdID = project_users.ProdID and project_users.UserID = users.UserID and project_users.role = access_level.role and access_level.ProdID = ?', [req.params.ProdID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+
+//Add a user to a project with a role
+app.post('/api/users/add_role', function (req, res) {
+    console.log(req);
+    var postRole = req.body;
+    api_connection.query('INSERT INTO project_users SET ?', postRole, function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+//Get all users 
+app.get('/api/users', function (req, res) {
+    console.log(req);
+    api_connection.query('SELECT * FROM project_users, access_level, users where access_level.ProdID = project_users.ProdID and project_users.UserID = users.UserID and project_users.role = access_level.role', function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
 //Update users role
+app.put('/api/user/project_roles/update', function (req, res) {
+    api_connection.query('UPDATE `project_users` SET `ProdID`=?,`UserID`=?,`Role`=? where `UserID`=? and `ProdID`=?', [req.body.ProdID, req.body.UserID, req.body.Role, req.body.UserID, req.body.ProdID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//{
+//    "ProdID": "A0001",
+//    "UserID": "vicCam",
+//    "Role": "3",
+//    "UserID": "vicCam",
+//    "ProdID": "A0001"
+//}
+
 //Update user Password
+app.put('/api/user/user_pass/update', function (req, res) {
+    api_connection.query('UPDATE `users` SET `UserID`=?,`Fir_Name`=?,`Las_Name`=?,`Email`=?,`Password`=? where `UserID`=?', [req.body.UserID, req.body.Fir_Name, req.body.Las_Name, req.body.Email, req.body.Password, req.body.UserID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+//{
+//    "UserID": "_tjoy",
+//    "Fir_Name": "Victoria",
+//    "Las_Name": "Cameron",
+//    "Email": "victoria.cameron2@marist.edu",
+//    "Password": "surveysRkool",
+//    "UserID": "_tjoy"
+//}
+
 
 //______________________________________________________________Surveys________________________________________________________
 //Get all surveys
