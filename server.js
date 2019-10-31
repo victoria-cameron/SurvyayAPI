@@ -164,7 +164,7 @@ app.put('/api/projects/update', function (req, res) {
 });
 
 //rest api to delete record from mysql database
-app.delete('/api/projects/delete/:ProdID', function (req, res) {
+app.delete('/api/projects/delete', function (req, res) {
     console.log(req.body);
     api_connection.query('DELETE FROM `projects` WHERE `ProdID`=?', [req.body.ProdID], function (error, results, fields) {
         if (error) throw error;
@@ -175,6 +175,14 @@ app.delete('/api/projects/delete/:ProdID', function (req, res) {
 //rest api to get all access levels for a project
 app.get('/api/access/single/:ProdID', function (req, res) {
     api_connection.query('select * from access_level where ProdID=?', [req.params.ProdID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+//get all access levels for a project
+app.get('/api/access/single/:ProdID', function (req, res) {
+    api_connection.query('select * from projects, access_level where projects.ProdID = access_level.ProdID projects.ProdID=?', [req.params.ProdID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
@@ -236,6 +244,15 @@ app.get('/api/questions/all', function (req, res) {
     api_connection.query('select * from questions_choices, questions where questions_choices.QuesID=questions.QuesID', [req.params.QuesID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
+    });
+});
+
+//rest api to delete record from mysql database
+app.delete('/api/questions/delete', function (req, res) {
+    console.log(req.body);
+    api_connection.query('DELETE FROM `questions` WHERE `QuesID`=?', [req.body.QuesID], function (error, results, fields) {
+        if (error) throw error;
+        res.end('Record has been deleted!');
     });
 });
 
@@ -381,7 +398,14 @@ app.get('/api/surveys/gather/:SurvID', function (req, res) {
         res.end(JSON.stringify(results));
     });
 });
-
+//rest api to delete record from mysql database
+app.delete('/api/surveys/delete', function (req, res) {
+    console.log(req.body);
+    api_connection.query('DELETE FROM `surveys` WHERE `SurvID`=?', [req.body.SurvID], function (error, results, fields) {
+        if (error) throw error;
+        res.end('Record has been deleted!');
+    });
+});
 
 //______________________________________________________________Interviews________________________________________________________
 //Get all interviews
@@ -434,7 +458,14 @@ app.post('/api/interviews/add_record', function (req, res) {
 //  "Note": ""
 //}
 
-
+//rest api to delete record from mysql database
+app.delete('/api/interviews/delete', function (req, res) {
+    console.log(req.body);
+    api_connection.query('DELETE FROM `interviews` WHERE `InteID`=?', [req.body.InteID], function (error, results, fields) {
+        if (error) throw error;
+        res.end('Record has been deleted!');
+    });
+});
 
 
 
