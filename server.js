@@ -47,7 +47,7 @@ const server = app.listen(7000,'0.0.0.0',() => {
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "passwordpassword",
+    password: "!Olivia001",
     database: "survay"
 });
 con.connect(function (err) {
@@ -60,7 +60,7 @@ function getMySQLConnection() {
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'passwordpassword',
+        password: '!Olivia001',
         database: 'survay'
     });
 }
@@ -112,7 +112,7 @@ var apiServer = app.listen(3000,'0.0.0.0', () => {
 var api_connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'passwordpassword',
+    password: '!Olivia001',
     database: 'survay'
 });
 
