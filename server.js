@@ -411,7 +411,7 @@ app.delete('/api/surveys/delete', function (req, res) {
 //Get all interviews
 app.get('/api/interviews', function (req, res) {
     console.log(req);
-    api_connection.query('select * from interviews', function (error, results, fields) {
+    api_connection.query('select * from interviews, surveys where interviews.SurvID = surveys.SurvID', function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
