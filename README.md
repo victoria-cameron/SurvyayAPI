@@ -1,7 +1,7 @@
 
 # Survyay API Documents
 
-As the great Kanye once said "Y'all think you wild." But no, I'll tell you who wild; ME! This is the laziest thing I've ever come up with but its freaking happening. Get with the times people API is the future!
+In order to provide ease of access to the database for our Up in the Gunks project, I have created an api that when running, provides the team with all of the access they will need.
 
 ## Instructions
 1. Clone repo
