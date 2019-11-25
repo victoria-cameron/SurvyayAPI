@@ -210,7 +210,8 @@ app.post('/api/questions/add', function (req, res) {
 //Example Body
 //{
 //	"QuesID": "", (is auto gened: Dont include)
-//	"Ques_text": ""
+//	"Ques_text": "",
+//  "Ques_view": ""
 //}
 
 //Add a Question Choice
@@ -253,6 +254,14 @@ app.delete('/api/questions/delete', function (req, res) {
     api_connection.query('DELETE FROM `questions` WHERE `QuesID`=?', [req.body.QuesID], function (error, results, fields) {
         if (error) throw error;
         res.end('Record has been deleted!');
+    });
+});
+
+//rest api to update record into questions
+app.put('/api/questions/update', function (req, res) {
+    api_connection.query('UPDATE `questions` SET `Ques_view`=? where `QuesID`=?', [req.body.Ques_view, req.body.QuesID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
     });
 });
 
