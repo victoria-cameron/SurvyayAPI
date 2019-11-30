@@ -337,16 +337,12 @@ app.put('/api/user/project_roles/update', function (req, res) {
 
 //Update user Password
 app.put('/api/user/user_pass/update', function (req, res) {
-    api_connection.query('UPDATE `users` SET `UserID`=?,`Fir_Name`=?,`Las_Name`=?,`Email`=?,`Password`=? where `UserID`=?', [req.body.UserID, req.body.Fir_Name, req.body.Las_Name, req.body.Email, req.body.Password, req.body.UserID], function (error, results, fields) {
+    api_connection.query('UPDATE `users` SET `Password`=? where `UserID`=?', [req.body.Password, req.body.UserID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
 //{
-//    "UserID": "_tjoy",
-//    "Fir_Name": "Victoria",
-//    "Las_Name": "Cameron",
-//    "Email": "victoria.cameron2@marist.edu",
 //    "Password": "surveysRkool",
 //    "UserID": "_tjoy"
 //}
