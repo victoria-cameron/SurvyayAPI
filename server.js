@@ -328,18 +328,15 @@ app.put('/api/user/project_roles/update', function (req, res) {
 
 //Update user Password
 app.put('/api/user/user_pass/update', function (req, res) {
-    api_connection.query('UPDATE `users` SET `UserID`=?,`Fir_Name`=?,`Las_Name`=?,`Email`=?,`Password`=? where `UserID`=?', [req.body.UserID, req.body.Fir_Name, req.body.Las_Name, req.body.Email, req.body.Password, req.body.UserID], function (error, results, fields) {
+    api_connection.query('UPDATE `users` SET `UserID`=?,`Password`=? where `UserID`=?', [req.body.UserID, req.body.Password, req.body.UserID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
 //{
-//    "UserID": "_tjoy",
-//    "Fir_Name": "Victoria",
-//    "Las_Name": "Cameron",
-//    "Email": "victoria.cameron2@marist.edu",
-//    "Password": "surveysRkool",
-//    "UserID": "_tjoy"
+    //"UserID": "_tjoy",
+    //"Password": "password",
+    //"UserID": "_tjoy"
 //}
 
 
@@ -419,7 +416,7 @@ app.get('/api/interviews', function (req, res) {
 
 //get all questions and answers for a given interview
 app.get('/api/interviews/gather/:InteID', function (req, res) {
-    api_connection.query('select * from interviews, records, questions where interviews.InteID = records.InteID and records.QuesID = questions.QuesID and interviews.InteID = ?', [req.params.InteID],
+    api_connection.query('select * from interviews, records, questions, surveys where interviews.InteID = records.InteID and records.QuesID = questions.QuesID and interviews.SurvID = surveys.SurvID and interviews.InteID = ?', [req.params.InteID],
         function (error, results, fields) {
             if (error) throw error;
             res.end(JSON.stringify(results));
