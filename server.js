@@ -47,7 +47,7 @@ const server = app.listen(7000,'0.0.0.0',() => {
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "passwordpassword",
+    password: "!Olivia001",
     database: "survay"
 });
 con.connect(function (err) {
@@ -60,7 +60,7 @@ function getMySQLConnection() {
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'passwordpassword',
+        password: '!Olivia001',
         database: 'survay'
     });
 }
@@ -112,7 +112,7 @@ var apiServer = app.listen(3000,'0.0.0.0', () => {
 var api_connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'passwordpassword',
+    password: '!Olivia001',
     database: 'survay'
 });
 
@@ -210,7 +210,8 @@ app.post('/api/questions/add', function (req, res) {
 //Example Body
 //{
 //	"QuesID": "", (is auto gened: Dont include)
-//	"Ques_text": ""
+//	"Ques_text": "",
+//  "Ques_view": ""
 //}
 
 //Add a Question Choice
@@ -253,6 +254,14 @@ app.delete('/api/questions/delete', function (req, res) {
     api_connection.query('DELETE FROM `questions` WHERE `QuesID`=?', [req.body.QuesID], function (error, results, fields) {
         if (error) throw error;
         res.end('Record has been deleted!');
+    });
+});
+
+//rest api to update record into questions
+app.put('/api/questions/update', function (req, res) {
+    api_connection.query('UPDATE `questions` SET `Ques_view`=? where `QuesID`=?', [req.body.Ques_view, req.body.QuesID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
     });
 });
 
@@ -328,15 +337,24 @@ app.put('/api/user/project_roles/update', function (req, res) {
 
 //Update user Password
 app.put('/api/user/user_pass/update', function (req, res) {
+<<<<<<< HEAD
     api_connection.query('UPDATE `users` SET `UserID`=?,`Password`=? where `UserID`=?', [req.body.UserID, req.body.Password, req.body.UserID], function (error, results, fields) {
+=======
+    api_connection.query('UPDATE `users` SET `Password`=? where `UserID`=?', [req.body.Password, req.body.UserID], function (error, results, fields) {
+>>>>>>> ea8758cc61c54df73df1c346d2f1a93fe918e5b6
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
 });
 //{
+<<<<<<< HEAD
     //"UserID": "_tjoy",
     //"Password": "password",
     //"UserID": "_tjoy"
+=======
+//    "Password": "surveysRkool",
+//    "UserID": "_tjoy"
+>>>>>>> ea8758cc61c54df73df1c346d2f1a93fe918e5b6
 //}
 
 
@@ -408,7 +426,7 @@ app.delete('/api/surveys/delete', function (req, res) {
 //Get all interviews
 app.get('/api/interviews', function (req, res) {
     console.log(req);
-    api_connection.query('select * from interviews', function (error, results, fields) {
+    api_connection.query('select * from interviews, surveys where interviews.SurvID = surveys.SurvID', function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
